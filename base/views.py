@@ -18,10 +18,9 @@ class OrderView(TemplateView):
         return context
 
 
-def order_detail(request):
-    num = request.GET.get('id', 1)
-    print(num)
-    order = Order.objects.get(id=num)
+def order_detail(request, pk):
+    print(pk)
+    order = Order.objects.get(id=pk)
     context = {
         'order': order
     }
