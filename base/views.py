@@ -5,11 +5,15 @@ from .models import Customer, Order
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    orders = Order.objects.filter(customer__telephone__icontains=q)
+    print(orders)
+    context = {'orders': orders}
+    return render(request, 'base/home.html', context)
 
 
 class OrderView(TemplateView):
-    template_name = 'order_list.html'
+    template_name = 'base/order_list.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -19,9 +23,8 @@ class OrderView(TemplateView):
 
 
 def order_detail(request, pk):
-    print(pk)
     order = Order.objects.get(id=pk)
     context = {
         'order': order
     }
-    return render(request, 'order.html', context)
+    return render(request, 'base/order.html', context)

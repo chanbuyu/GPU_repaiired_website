@@ -33,12 +33,41 @@
 
 <nav class="navbar navbar-light bg-light">
   <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <input name="q" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
 </nav>
 
-
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">型号</th>
+      <th scope="col">日期</th>
+      <th scope="col">状态</th>
+      <th scope="col">详情</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for order in orders %}
+    <tr >
+      <th scope="row" >{{ order.id }}</th>
+      <td >{{ order.brand }}{{ order.name }}</td>
+      <td>{{ order.date | date:"m-d" }}</td>
+      <td>
+          {% if order.status == 'have order' %}
+              <button type="button" class="btn btn-primary">正在清洗中..</button>
+          {% elif order.status == 'have clean' %}
+              <button type="button" class="btn btn-danger">已清洗，正在修复中..</button>
+          {% elif order.status == 'repaired' %}
+              <button type="button" class="btn btn-info">已修复，正在检测中..</button>
+          {% else %}
+              <button type="button" class="btn btn-success">各项检测正常，已发回</button>
+          {% endif %}
+      </td>
+      <td><a class="btn btn-outline-primary" href="{% url 'order' order.id %}" role="button">点击查看</a></td>
+    </tr>
+  {% endfor %}
 
   </body>
 </html>

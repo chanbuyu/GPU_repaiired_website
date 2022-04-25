@@ -35,6 +35,11 @@
           </tr>
 
           <tr>
+            <th scope="row">客户：</th>
+            <td>{{ order.customer.name }}</td>
+          </tr>
+
+          <tr>
             <th scope="row">下单时间：</th>
             <td>{{ order.date | date:"Y-m-d" }}</td>
           </tr>

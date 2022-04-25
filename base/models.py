@@ -47,5 +47,8 @@ class Order(models.Model):
                                     )                                
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['-date']
+
     def __str__(self):
         return f'{self.date}--{self.name}'
