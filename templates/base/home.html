@@ -38,9 +38,9 @@
         <div class="card-title">
           {{ order.brand }}{{ order.name }}--{{ order.status }}
         </div>
-        <img class="card-img-top" src="{% static order.sn_pic %}" alt="Card image cap">
+        <img class="card-img-top" src="{% static order.repaired_pic_front %}" alt="Card image cap">
         <div class="card-footer">
-            <small class="text-muted">{{ order.date | timesince }} ago</small>
+            <small class="text-muted">{{ order.date | timesince }} 以前</small>
         </div>
       </div>
     {% endfor %}

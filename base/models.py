@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.db import models
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
@@ -8,6 +9,10 @@ class Customer(models.Model):
     name = models.CharField(verbose_name="客户姓名", max_length=200, null=True)
     telephone = models.CharField(verbose_name="电话", max_length=200, null=True)
     address = models.CharField(verbose_name="收货地址", max_length=200, null=True)
+
+    class Meta:
+        verbose_name = '客户信息'
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return f'{self.name}--{self.telephone}'
@@ -52,6 +57,8 @@ class Order(models.Model):
 
     class Meta:
         ordering = ['-date']
+        verbose_name = '显卡订单'
+        verbose_name_plural = verbose_name
 
     def __str__(self):
-        return f'{self.date}--{self.name}'
+        return f'{self.date.strftime("%Y-%m-%d %H:%M")}--{self.brand}{self.name}'
