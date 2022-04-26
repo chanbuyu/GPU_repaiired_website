@@ -6,7 +6,7 @@
     <div class="container">
         <ul class="nav nav-pills nav-fill">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">主页</a>
+              <a class="nav-link active" aria-current="page" href="/">主 页</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href=""></a>
@@ -22,71 +22,76 @@
   <nav class="navbar navbar-light bg-light">
     <form class="input-group">
       <input name="q" class="form-control mr-sm-2" type="search" placeholder="请输入手机号码查询订单..." aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">查 询</button>
     </form>
   </nav>
 </div>
 <hr>
 
+{% if q == '' %}
+  <div class="container">
+    <div class="container">
 
-{% if orders_search != None %}
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">您的订单为：</a>
+    {% for order in order_list %}
+      <div class="card">
+        
+        <div class="card-title">
+          {{ order.brand }}{{ order.name }}--{{ order.status }}
         </div>
-      </nav>
-
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">型号</th>
-            <th scope="col">日期</th>
-            <th scope="col">状态</th>
-            <th scope="col">详情</th>
-          </tr>
-        </thead>
-        <tbody>
-        {% for order in orders_search %}
-          <tr >
-            <th scope="row" >{{ order.id }}</th>
-            <td >{{ order.brand }}{{ order.name }}</td>
-            <td>{{ order.date | date:"m-d" }}</td>
-            <td>
-                {% if order.status == '正在清洗中..' %}
-                    <button type="button" class="btn btn-primary">正在清洗中..</button>
-                {% elif order.status == '已清洗，正在修复中..' %}
-                    <button type="button" class="btn btn-danger">已清洗，正在修复中..</button>
-                {% elif order.status == '已修复，正在检测中..' %}
-                    <button type="button" class="btn btn-info">已修复，正在检测中..</button>
-                {% else %}
-                    <button type="button" class="btn btn-success">各项检测正常，已发回</button>
-                {% endif %}
-            </td>
-            <td><a class="btn btn-outline-primary" href="{% url 'order' order.id %}" role="button">点击查看</a></td>
-          </tr>
-        {% endfor %}
-
+        <img class="card-img-top" src="{% static order.sn_pic %}" alt="Card image cap">
+        <div class="card-footer">
+            <small class="text-muted">{{ order.date | timesince }} ago</small>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
 {% else %}
 
-    <div class="container">
-      <div class="container">
+  {% if orders_search|length == 0 %}
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">您的订单不存在，请确保手机号码输入是否有误！</a>
+      </div>
+    </nav>
+  {% else %}
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">您的订单为：</a>
+      </div>
+    </nav>
 
-      {% for order in order_list %}
-        <div class="card">
-          
-          <div class="card-title">
-            {{ order.brand }}{{ order.name }}--{{ order.status }}
-          </div>
-          <img class="card-img-top" src="{% static order.sn_pic %}" alt="Card image cap">
-          <div class="card-footer">
-              <small class="text-muted">{{ order.date | timesince }} ago</small>
-          </div>
-        </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">型号</th>
+          <th scope="col">日期</th>
+          <th scope="col">状态</th>
+          <th scope="col">详情</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for order in orders_search %}
+        <tr >
+          <th scope="row" >{{ order.id }}</th>
+          <td >{{ order.brand }}{{ order.name }}</td>
+          <td>{{ order.date | date:"m-d" }}</td>
+          <td>
+              {% if order.status == '正在清洗中..' %}
+                  <button type="button" class="btn btn-primary">正在清洗中..</button>
+              {% elif order.status == '已清洗，正在修复中..' %}
+                  <button type="button" class="btn btn-danger">已清洗，正在修复中..</button>
+              {% elif order.status == '已修复，正在检测中..' %}
+                  <button type="button" class="btn btn-info">已修复，正在检测中..</button>
+              {% else %}
+                  <button type="button" class="btn btn-success">各项检测正常，已发回</button>
+              {% endif %}
+          </td>
+          <td><a class="btn btn-outline-primary" href="{% url 'order' order.id %}" role="button">点击查看</a></td>
+        </tr>
       {% endfor %}
-  
+  {% endif %}
 {% endif %}
-  </div>
-</div>
 
 {% endblock %}

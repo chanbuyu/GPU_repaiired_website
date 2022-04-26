@@ -16,7 +16,7 @@ def home(request):
         print(q)
         orders_search = Order.objects.filter(customer__telephone__icontains=q)
     data = Order.objects.all()[0:5]
-    context = {'orders_search': orders_search, 'order_list': data, 'status': status}
+    context = {'orders_search': orders_search, 'order_list': data, 'status': status, 'q': q}
     return render(request, 'base/home.html', context)
 
 
