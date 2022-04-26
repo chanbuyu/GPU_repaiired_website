@@ -14,7 +14,10 @@ class Customer(models.Model):
 
 
 class Order(models.Model):
-    STATUS = (('have order','已接单'), ('have clean','已清洗'), ('repaired', '已维修'), ('finish', '已完成'))
+    STATUS = (('正在清洗中..','已接单'), 
+              ('已清洗，正在修复中..','已清洗'), 
+              ('已修复，正在检测中..', '已维修'), 
+              ('各项检测正常，已发回', '已完成'))
 
     date = models.DateTimeField(verbose_name="收卡时间", auto_now=True)
     brand = models.CharField(verbose_name="品牌", max_length=100, null=True)

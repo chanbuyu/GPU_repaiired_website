@@ -32,11 +32,11 @@
             <td >{{ order.brand }}{{ order.name }}</td>
             <td>{{ order.date | date:"m-d" }}</td>
             <td>
-                {% if order.status == 'have order' %}
+                {% if order.status == '正在清洗中..' %}
                     <button type="button" class="btn btn-primary">正在清洗中..</button>
-                {% elif order.status == 'have clean' %}
+                {% elif order.status == '已清洗，正在修复中..' %}
                     <button type="button" class="btn btn-danger">已清洗，正在修复中..</button>
-                {% elif order.status == 'repaired' %}
+                {% elif order.status == '已修复，正在检测中..' %}
                     <button type="button" class="btn btn-info">已修复，正在检测中..</button>
                 {% else %}
                     <button type="button" class="btn btn-success">各项检测正常，已发回</button>
